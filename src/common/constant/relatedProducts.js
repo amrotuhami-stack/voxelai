@@ -1,0 +1,56 @@
+const relatedProductsConstantData = {
+    products: [
+        {
+			title: "DDS-Pro software for guide design (full version)",
+			price: "$79.00",
+			oldprice: "$109.00",
+			image: "product-image.png",
+			desc:"Our DSD team will create 2D and 3D digital smile design project for your...",
+			bestseller: false,
+			startservice: false,	
+			cartadded: false,	
+		},
+		{
+			title: "DDS-Pro software for guide design (full version)",
+			price: "$79.00",
+			oldprice: "$109.00",
+			image: "product-image.png",
+			desc:"Our DSD team will create 2D and 3D digital smile design project for your...",
+			bestseller: false,
+			startservice: true,
+			cartadded: false,			
+		},
+		{
+			title: "DDS-Pro software for guide design (full version)",
+			price: "$79.00",
+			oldprice: "$109.00",
+			image: "product-image.png",
+			desc:"Our DSD team will create 2D and 3D digital smile design project for your...",
+			bestseller: false,
+			startservice: true,
+			cartadded: false,			
+		},
+		{
+			title: "DDS-Pro software for guide design (full version)",
+			price: "$79.00",
+			oldprice: "$109.00",
+			image: "product-image.png",
+			desc:"Our DSD team will create 2D and 3D digital smile design project for your...",
+			bestseller: false,
+			startservice: false,	
+			cartadded: false,	
+		},
+		{
+			title: "DDS-Pro software for guide design (full version)",
+			price: "$79.00",
+			oldprice: "$109.00",
+			image: "product-image.png",
+			desc:"Our DSD team will create 2D and 3D digital smile design project for your...",
+			bestseller: false,
+			startservice: false,	
+			cartadded: false,	
+		},
+    ],
+}
+
+export default relatedProductsConstantData

@@ -1,0 +1,55 @@
+# Dockerfile for DentalSegmentator AI Service
+# Uses Python 3.11 for nnU-Net compatibility
+
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV nnUNet_results=/app/models
+ENV nnUNet_raw=/tmp/nnunet_raw
+ENV nnUNet_preprocessed=/tmp/nnunet_preprocessed
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install Python dependencies (core only for faster build)
+RUN pip install --no-cache-dir \
+    fastapi==0.104.1 \
+    uvicorn[standard]==0.24.0 \
+    httpx==0.25.1 \
+    pydantic==2.5.0 \
+    python-multipart==0.0.6
+
+# Install ML dependencies
+RUN pip install --no-cache-dir \
+    torch>=2.0.0 --index-url https://download.pytorch.org/whl/cpu
+
+RUN pip install --no-cache-dir \
+    SimpleITK>=2.3.0 \
+    pydicom>=2.4.0 \
+    nibabel>=5.0.0 \
+    numpy>=1.24.0 \
+    nnunetv2>=2.2 \
+    highdicom>=0.22.0
+
+# Create model directory
+RUN mkdir -p /app/models
+
+# Copy application code
+COPY main.py /app/
+COPY routers/ /app/routers/
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Run the server
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

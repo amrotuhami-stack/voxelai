@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  dental-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile.dental-ai
+    container_name: dental-ai-service
+    ports:
+      - "8001:8000" # Map to 8001 to avoid conflict with main backend
+    environment:
+      - ORTHANC_URL=http://host.docker.internal:8042
+      - nnUNet_results=/app/models
+      - DENTAL_SEGMENTATOR_MODEL_DIR=/app/models
+    volumes:
+      - dental-ai-models:/app/models
+      - /tmp/dental_seg_output:/tmp/output
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  dental-ai-models:
+    driver: local

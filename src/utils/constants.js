@@ -1,0 +1,118 @@
+export const SERVICE_STATUS = {
+  NEW: {
+    title: "NEW",
+    value: "Upload File",
+  },
+  TEETH_NUMBERING_VALIDATION: {
+    title: "TEETH_NUMBERING_VALIDATION",
+    value: "Needs Approval",
+  },
+  ANALYZED: {
+    title: "ANALYZED",
+    value: "Needs Approval",
+  },
+  Signed: {
+    title: "Signed",
+    value: "Signed",
+  },
+};
+
+export const leftTopTeethNumbers = [
+  "18",
+  "17",
+  "16",
+  "15",
+  "14",
+  "13",
+  "12",
+  "11",
+];
+export const leftBottomTeethNumbers = [
+  "48",
+  "47",
+  "46",
+  "45",
+  "44",
+  "43",
+  "42",
+  "41",
+];
+export const leftTopTeethNumbers2 = ["55", "54", "53", "52", "51"];
+export const leftBottomTeethNumbers2 = ["85", "84", "83", "82", "81"];
+export const rightTopTeethNumbers = [
+  "21",
+  "22",
+  "23",
+  "24",
+  "25",
+  "26",
+  "27",
+  "28",
+];
+export const rightBottomTeethNumbers = [
+  "31",
+  "32",
+  "33",
+  "34",
+  "35",
+  "36",
+  "37",
+  "38",
+];
+export const rightTopTeethNumbers2 = ["61", "62", "63", "64", "65"];
+export const rightBottomTeethNumbers2 = ["71", "72", "73", "74", "75"];
+export const universalNumbering = {
+  11: "8",
+  12: "7",
+  13: "6",
+  14: "5",
+  15: "4",
+  16: "3",
+  17: "2",
+  18: "1",
+  21: "9",
+  22: "10",
+  23: "11",
+  24: "12",
+  25: "13",
+  26: "14",
+  27: "15",
+  28: "16",
+  31: "24",
+  32: "23",
+  33: "22",
+  34: "21",
+  35: "20",
+  36: "19",
+  37: "18",
+  38: "17",
+  41: "25",
+  42: "26",
+  43: "27",
+  44: "28",
+  45: "29",
+  46: "30",
+  47: "31",
+  48: "32",
+
+  51: "E",
+  52: "D",
+  53: "C",
+  54: "B",
+  55: "A",
+  61: "F",
+  62: "G",
+  63: "H",
+  64: "I",
+  65: "J",
+  71: "O",
+  72: "N",
+  73: "M",
+  74: "L",
+  75: "K",
+  81: "P",
+  82: "Q",
+  83: "R",
+  84: "S",
+  85: "T",
+};

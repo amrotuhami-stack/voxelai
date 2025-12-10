@@ -1,0 +1,26 @@
+export const CATALOGUE = {
+    PRODUCT_LIST: 'getProducts',
+    UPDATE_ONLY_PRODUCT_LIST: 'updateOnlyProducts',
+    GET_PRODUCT_DETAILS: 'getProductDetail',
+    GET_CART: "getCart",
+    CART_LINES: "cartLines",
+    ADD_CART: 'addCart',
+    REMOVE_CART: 'removeCart',
+    REPLACE_CART_ITEM: 'replaceCartItem',
+    UPDATE_CART_QTY: 'updateCartQty',
+    UPDATE_CART_LINE_ATTR: 'updateCartLineAttr'
+}
+
+export const CATALOGUE_ACTIONS = {
+    GET_PRODUCTS: "GET_PRODUCTS",
+    GET_PRODUCT_DETAILS: "GET_PRODUCT_DETAILS",
+    APPLY_FILTER: "APPLY_FILTER",
+    GET_RELATED_PRODUCTS: "GET_RELATED_PRODUCTS"
+}
+
+export const CATALOGUE_MUTATIONS = {
+    SET_PRODUCTS: "SET_PRODUCTS",
+    SET_FACET_DATA: "SET_FACET_DATA",
+    SET_PRODUCT_DETAILS: "SET_PRODUCT_DETAILS",
+    SET_RELATED_PRODUCTS: "SET_RELATED_PRODUCTS"
+}

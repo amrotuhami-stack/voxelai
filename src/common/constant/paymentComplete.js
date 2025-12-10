@@ -1,0 +1,51 @@
+const paymentCompleteConstantData = {
+    serviceList: [
+        {
+            index: 0,
+            image: 'mobile.png',
+            title: '3D Implant Planing',
+            link: 'Start This Service',
+            showBtn: true,
+            seeMore: false,
+            detail: 'See More Details',
+            remaining: false,
+            case: 15,
+            remainingCase: 'cases remaining',
+            duration: 'exp. Jan 2022',
+            value: 40,
+            max: 100,
+        },
+        {
+            index: 1,
+            image: 'mobile.png',
+            title: 'Cephalometric Analysis ',
+            showBtn: true,
+            link: 'Start This Service',
+            seeMore: false,
+            detail: 'See More Details',
+            remaining: true,
+            case: 15,
+            remainingCase: 'cases remaining',
+            duration: 'exp. Jan 2022',
+            value: 0,
+            max: 100,
+        },
+        {
+            index: 2,
+            image: 'mobile.png',
+            title: 'Surgical guide for implant (2 or 3 Implant)',
+            link: 'See Details',
+            showBtn: true,
+            seeMore: false,
+            detail: 'See More Details',
+            remaining: false,
+            case: 15,
+            remainingCase: 'cases remaining',
+            duration: 'exp. Jan 2022',
+            value: 40,
+            max: 100,
+        },
+    ]
+}
+
+export default paymentCompleteConstantData

@@ -1,0 +1,66 @@
+const shopConstantData = {
+    products: [
+        {
+            title: '3D Implant Planning',
+            price: '$79.00',
+            oldprice: '$109.00',
+            image: 'product-image.png',
+            soldby: 'Voxel',
+            bestseller: true,
+            startservice: true,
+            cartadded: false,
+        },
+        {
+            title: 'Cephalometric Analysis',
+            price: '$79.00',
+            oldprice: '$109.00',
+            image: 'product-image.png',
+            soldby: 'Seller 1',
+            bestseller: false,
+            startservice: false,
+            cartadded: false,
+        },
+        {
+            title: 'DDS-Pro software for gui...',
+            price: '$79.00',
+            oldprice: '$109.00',
+            image: 'product-image.png',
+            soldby: 'Seller 2',
+            bestseller: true,
+            startservice: false,
+            cartadded: true,
+        },
+        {
+            title: '3D Implant Planning',
+            price: '$79.00',
+            oldprice: '$109.00',
+            image: 'product-image.png',
+            soldby: 'Voxel',
+            bestseller: true,
+            startservice: true,
+            cartadded: false,
+        },
+        {
+            title: 'Cephalometric Analysis',
+            price: '$79.00',
+            oldprice: '$109.00',
+            image: 'product-image.png',
+            soldby: 'Seller 1',
+            bestseller: false,
+            startservice: false,
+            cartadded: false,
+        },
+        {
+            title: 'DDS-Pro software for gui...',
+            price: '$79.00',
+            oldprice: '$109.00',
+            image: 'product-image.png',
+            soldby: 'Seller 2',
+            bestseller: true,
+            startservice: false,
+            cartadded: true,
+        },
+    ]
+}
+
+export default shopConstantData

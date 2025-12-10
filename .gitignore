@@ -30,3 +30,4 @@ backend/dental-ai/models/yolov8/*/weights/
 backend/dental-ai/test_results/
 __pycache__/
 *.pyc
+backend/.venv/

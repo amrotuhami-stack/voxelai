@@ -1,0 +1,25 @@
+# Core FastAPI
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+httpx==0.25.1
+pydantic==2.5.0
+python-multipart==0.0.6
+
+# DICOM and image processing
+pydicom>=2.4.0
+numpy>=1.24.0
+
+# Panoramic generator dependencies
+scipy>=1.10.0
+Pillow>=10.0.0
+
+# DentalSegmentator dependencies (optional - requires compatible Python version)
+# nnunetv2>=2.2
+# torch>=2.0.0
+# SimpleITK>=2.3.0
+# nibabel>=5.0.0
+# highdicom>=0.22.0
+
+# STL mesh generation
+scikit-image>=0.21.0
+numpy-stl>=3.0.0
