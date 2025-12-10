@@ -4,7 +4,7 @@ Orchestrates 3D Slicer processing jobs for CBCT analysis
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import slicer, dental_segmentator, implant_planner, panoramic_generator, dental_ai_opg
+from routers import slicer, dental_segmentator, implant_planner, panoramic_generator, dental_ai_opg, cephalometric_ai
 import os
 
 app = FastAPI(
@@ -35,6 +35,7 @@ app.include_router(dental_segmentator.router, prefix="/process/dental-segmentato
 app.include_router(implant_planner.router, prefix="/process/implant-planner", tags=["implant-planner"])
 app.include_router(panoramic_generator.router, prefix="/process/panoramic", tags=["panoramic"])
 app.include_router(dental_ai_opg.router)  # OPG AI analysis (has its own /api/dental-ai prefix)
+app.include_router(cephalometric_ai.router)  # Cephalometric landmark detection (has its own /api/cephalometric prefix)
 
 @app.get("/health")
 async def health_check():
