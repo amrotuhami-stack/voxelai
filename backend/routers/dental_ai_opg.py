@@ -35,7 +35,7 @@ except ImportError:
 
 # Configuration
 MODEL_DIR = Path(__file__).parent.parent / "dental-ai" / "models"
-TOOTH_MODEL_PATH = MODEL_DIR / "yolov8" / "tooth_detection" / "weights" / "best.pt"
+TOOTH_MODEL_PATH = MODEL_DIR / "yolov8" / "dental_unified_v2" / "weights" / "best.pt"
 
 # Initialize router
 router = APIRouter(prefix="/api/dental-ai", tags=["Dental AI OPG"])
@@ -92,10 +92,10 @@ def load_model():
                 status_code=503,
                 detail=f"Tooth detection model not found. Please train the model first."
             )
-        
+
         from ultralytics import YOLO
         _model_cache["tooth_model"] = YOLO(str(TOOTH_MODEL_PATH))
-    
+
     return _model_cache["tooth_model"]
 
 
@@ -126,17 +126,17 @@ def class_id_to_lesion(class_id: int) -> Optional[str]:
 def generate_overlay(image: np.ndarray, teeth: List[dict], lesions: List[dict]) -> np.ndarray:
     """Generate annotated overlay image"""
     overlay = image.copy()
-    
+
     # Draw tooth detections (green boxes)
     for tooth in teeth:
         x1, y1, x2, y2 = map(int, tooth["bbox"])
         cv2.rectangle(overlay, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        
+
         # Label
         label = f"{tooth['tooth_id']}"
-        cv2.putText(overlay, label, (x1, y1 - 5), 
+        cv2.putText(overlay, label, (x1, y1 - 5),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-    
+
     # Draw lesion detections (red boxes)
     lesion_colors = {
         "caries": (0, 0, 255),        # Red
@@ -144,16 +144,16 @@ def generate_overlay(image: np.ndarray, teeth: List[dict], lesions: List[dict]) 
         "periapical_lesion": (0, 165, 255),  # Orange
         "impacted": (255, 0, 128),    # Purple
     }
-    
+
     for lesion in lesions:
         x1, y1, x2, y2 = map(int, lesion["bbox"])
         color = lesion_colors.get(lesion["lesion_type"], (255, 0, 0))
         cv2.rectangle(overlay, (x1, y1), (x2, y2), color, 2)
-        
+
         label = lesion["lesion_type"].replace("_", " ").title()
         cv2.putText(overlay, label, (x1, y2 + 15),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.4, color, 1)
-    
+
     return overlay
 
 
@@ -172,7 +172,7 @@ def generate_summary(teeth: List[dict], lesions: List[dict]) -> dict:
         "lesions_by_type": {},
         "affected_teeth": [],
     }
-    
+
     # Count teeth by quadrant
     for tooth in teeth:
         fdi = tooth["tooth_id"]
@@ -180,16 +180,16 @@ def generate_summary(teeth: List[dict], lesions: List[dict]) -> dict:
             quadrant = int(fdi[0])
             if quadrant in summary["teeth_by_quadrant"]:
                 summary["teeth_by_quadrant"][quadrant] += 1
-    
+
     # Count lesions by type
     for lesion in lesions:
         ltype = lesion["lesion_type"]
         summary["lesions_by_type"][ltype] = summary["lesions_by_type"].get(ltype, 0) + 1
         if lesion.get("tooth_id"):
             summary["affected_teeth"].append(lesion["tooth_id"])
-    
+
     summary["affected_teeth"] = list(set(summary["affected_teeth"]))
-    
+
     return summary
 
 
@@ -204,7 +204,7 @@ async def analyze_opg(
 ):
     """
     Analyze OPG/panoramic X-ray image
-    
+
     Returns:
     - Tooth detections with FDI numbering
     - Lesion detections (caries, periapical, impacted)
@@ -215,29 +215,29 @@ async def analyze_opg(
     contents = await file.read()
     nparr = np.frombuffer(contents, np.uint8)
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    
+
     if image is None:
         raise HTTPException(status_code=400, detail="Invalid image file")
-    
+
     # Generate unique image ID
     image_id = f"opg_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(contents) % 10000:04d}"
-    
+
     try:
         # Load model and run inference
         model = load_model()
         results = model(image, conf=confidence_threshold)
-        
+
         teeth = []
         lesions = []
-        
+
         for result in results:
             boxes = result.boxes
-            
+
             for i in range(len(boxes)):
                 class_id = int(boxes.cls[i])
                 confidence = float(boxes.conf[i])
                 bbox = boxes.xyxy[i].tolist()
-                
+
                 # Determine if tooth or lesion
                 fdi = class_id_to_fdi(class_id)
                 if fdi:
@@ -257,16 +257,16 @@ async def analyze_opg(
                             "bbox": bbox,
                             "confidence": confidence,
                         })
-        
+
         # Generate summary
         summary = generate_summary(teeth, lesions)
-        
+
         # Generate overlay if requested
         overlay_base64 = None
         if include_overlay:
             overlay = generate_overlay(image, teeth, lesions)
             overlay_base64 = image_to_base64(overlay)
-        
+
         return AnalysisResult(
             image_id=image_id,
             timestamp=datetime.now().isoformat(),
@@ -275,7 +275,7 @@ async def analyze_opg(
             summary=summary,
             overlay_image=overlay_base64,
         )
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
 
@@ -284,7 +284,7 @@ async def analyze_opg(
 async def health_check():
     """Check dental AI service health"""
     model_status = "available" if TOOTH_MODEL_PATH.exists() else "not_trained"
-    
+
     return {
         "status": "healthy",
         "model_status": model_status,
@@ -315,12 +315,12 @@ async def batch_analyze(
 ):
     """
     Analyze multiple OPG images (batch processing)
-    
+
     Returns job ID for async processing
     """
     # TODO: Implement batch processing with background tasks
     job_id = f"batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-    
+
     return {
         "job_id": job_id,
         "status": "queued",
@@ -337,11 +337,11 @@ async def model_info():
             "status": "not_trained",
             "message": "Model has not been trained yet. Run training pipeline first."
         }
-    
+
     try:
         from ultralytics import YOLO
         model = YOLO(str(TOOTH_MODEL_PATH))
-        
+
         return {
             "status": "available",
             "model_path": str(TOOTH_MODEL_PATH),
